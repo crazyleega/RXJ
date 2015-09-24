@@ -1,0 +1,35 @@
+<ion-view >
+  <div class="bar bar-header bar-light">
+    <h1 class="title">大咖博文订阅</h1>
+  </div>
+  <ion-content class="has-footer has-header">
+      <ion-list>
+        <ion-item class="item-avatar item-icon-right" ng-repeat="post in posts" type="item-text-wrap" ng-click="loadPost(post.body,post.comments_url)">
+        <img ng-src="{{post.user.avatar_url}}">
+        <h2>{{post.title}}</h2>
+        <p>{{post.user.login}}</p>
+        <p>{{post.created_at}}</p>
+        <!--<span class="badge badge-positive">{{ $root.chatBadge != 0 ? $root.chatBadge : ""}}</span>-->
+        </ion-item>
+        <ion-infinite-scroll
+          on-infinite="loadMore()"
+          distance="1%">
+        </ion-infinite-scroll>
+      </ion-list>
+    </ion-content>
+  <div class="tabs tabs-light tabs-icon-top tabs-color-positive">
+    <a class="tab-item" ng-click="$root.onClickDashTab()">
+      <i class="icon ion-cube"></i>菜单
+    </a>
+    <a class="tab-item active" ng-click="$root.onClickPostTab()">
+      <i class="icon ion-ios-book"></i>订阅
+    </a>
+    <a class="tab-item has-badge" ng-click="$root.onClickChatTab()">
+      <div class="badge badge-assertive">{{ $root.chatBadge != 0 ? $root.chatBadge : ""}}</div>
+      <i class="icon ion-chatbubbles"></i>聊天
+    </a>
+    <a class="tab-item" ng-click="$root.onClickDrawTab()">
+      <i class="icon ion-paintbrush"></i>绘画
+    </a>
+  </div>
+</ion-view>
