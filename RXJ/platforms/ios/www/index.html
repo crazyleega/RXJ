@@ -1,34 +1,103 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+  <link href="assets/lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/lib/drawingboard/drawingboard.css" rel="stylesheet">
+  <link href="assets/lib/notify/ng-notify.min.css" rel="stylesheet">
+  <link href="assets/lib/locker/patternLock.css" rel="stylesheet">
+  <!--<base href="/DaK/www/">-->
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+  <!-- ionic/angularjs js -->
+</head>
+<!--<div id="loading-cover" class="vertical-center text-center"><p style="font-size: 2em; margin-bottom: .5em;">-->
+  <!--<img src="assets/img/logo.png" class="inline logo"><span></span></p>-->
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+  <!--<p style="font-size: 1.5em; margin-bottom: 2em;">只是做做无聊的事情..</p>-->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <!--<div class="inner">-->
+    <!--<article id="loading-message" class="meta">-->
+      <!--<div class="action"><p id="loading-p"><i class="ion-load-c spin"></i><span>加载中</span></p>-->
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+      <!--</div>-->
+    <!--</article>-->
+  <!--</div>-->
+<!--</div>-->
+<div id="loading-cover" class="vertical-center text-center">
+  <div class="container-cloud">
+    <svg version="1.1" class="svg-cloud01" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+      <g>
+        <path d="M642.02-364.11c-0.772,0-1.519,0.114-2.229,0.313c-0.17-6.744-5.679-12.162-12.464-12.162   c-4.368,0-8.201,2.251-10.428,5.65c-1.38-2.61-4.117-4.393-7.275-4.393c-2.621,0-4.95,1.229-6.456,3.139   c-2.865-6.496-9.357-11.031-16.913-11.031c-8.99,0-16.479,6.42-18.138,14.926c-0.937-0.248-1.911-0.393-2.925-0.393   c-6.312,0-11.427,5.116-11.427,11.427c0,0.907,0.117,1.787,0.317,2.634h95.921c0.146-0.609,0.229-1.243,0.229-1.896   C650.233-360.433,646.556-364.11,642.02-364.11z"/>
+      </g>
+      <g>
+        <path d="M90.02,48.188c-0.771,0-1.518,0.113-2.229,0.312c-0.17-6.744-5.678-12.162-12.463-12.162   c-4.369,0-8.201,2.251-10.428,5.65c-1.381-2.61-4.117-4.393-7.275-4.393c-2.621,0-4.951,1.229-6.457,3.139   c-2.865-6.496-9.357-11.031-16.913-11.031c-8.99,0-16.479,6.42-18.138,14.926c-0.937-0.248-1.911-0.393-2.925-0.393   c-6.312,0-11.427,5.116-11.427,11.427c0,0.907,0.117,1.786,0.317,2.634h95.92c0.146-0.609,0.23-1.243,0.23-1.896   C98.234,51.863,94.557,48.188,90.02,48.188z"/>
+      </g>
+    </svg>
+    <svg version="1.1" class="svg-cloud02" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+      <g>
+        <path d="M642.02-364.11c-0.772,0-1.519,0.114-2.229,0.313c-0.17-6.744-5.679-12.162-12.464-12.162   c-4.368,0-8.201,2.251-10.428,5.65c-1.38-2.61-4.117-4.393-7.275-4.393c-2.621,0-4.95,1.229-6.456,3.139   c-2.865-6.496-9.357-11.031-16.913-11.031c-8.99,0-16.479,6.42-18.138,14.926c-0.937-0.248-1.911-0.393-2.925-0.393   c-6.312,0-11.427,5.116-11.427,11.427c0,0.907,0.117,1.787,0.317,2.634h95.921c0.146-0.609,0.229-1.243,0.229-1.896   C650.233-360.433,646.556-364.11,642.02-364.11z"/>
+      </g>
+      <g>
+        <path d="M90.02,48.188c-0.771,0-1.518,0.113-2.229,0.312c-0.17-6.744-5.678-12.162-12.463-12.162   c-4.369,0-8.201,2.251-10.428,5.65c-1.381-2.61-4.117-4.393-7.275-4.393c-2.621,0-4.951,1.229-6.457,3.139   c-2.865-6.496-9.357-11.031-16.913-11.031c-8.99,0-16.479,6.42-18.138,14.926c-0.937-0.248-1.911-0.393-2.925-0.393   c-6.312,0-11.427,5.116-11.427,11.427c0,0.907,0.117,1.786,0.317,2.634h95.92c0.146-0.609,0.23-1.243,0.23-1.896   C98.234,51.863,94.557,48.188,90.02,48.188z"/>
+      </g>
+    </svg>
+  </div>
+  <div class="bird-body" id="birdy">
+    <div class="beak"></div>
+    <div class="eye"></div>
+    <div class="tail"></div>
+    <div class="wing"></div>
+    <div class="nevus"></div>
+  </div>
+  <p>努力加载中..</p>
+</div>
 
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter" class="platform-ios platform-cordova platform-webview">
+<body ng-app="dak" class="platform-ios platform-cordova platform-webview">
+<ion-nav-view></ion-nav-view>
+<script src="assets/lib/jquery/jquery.js"></script>
+<script src="assets/lib/ionic/js/ionic.bundle.js"></script>
+<script src="assets/lib/undo/simple-undo.js"></script>
+<script src="assets/lib/drawingboard/drawingboard.js"></script>
+<script src="assets/lib/markdown/markdown.js"></script>
+<script src="assets/lib/socket.io/socket.io.js"></script>
+<script src="assets/lib/stomp/stomp.js"></script>
+<script src="assets/lib/socket.io/socket.js"></script>
+<script src="assets/lib/locker/patternLock.js"></script>
+<script src="assets/lib/notify/ng-notify.min.js"></script>
+<script src="assets/js/plugin/ngDrawingBoard.js"></script>
+<script src="assets/js/plugin/ngStomp.js"></script>
+<script src="assets/js/plugin/ngChat.js"></script>
+<script src="assets/js/plugin/ngLocker.js"></script>
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-  </body>
+<!-- cordova script (this will be a 404 during development) -->
+<!--<script src="cordova.js"></script>-->
+
+<!-- your app's js -->
+<script src="assets/js/app.js"></script>
+<script src="assets/js/router.js"></script>
+<script src="assets/js/controller/common/mainCtrl.js"></script>
+<script src="assets/js/controller/chat/chatCtrl.js"></script>
+<script src="assets/js/controller/chat/userCtrl.js"></script>
+<script src="assets/js/controller/dash/dashCtrl.js"></script>
+<script src="assets/js/controller/posts/postsCtrl.js"></script>
+<script src="assets/js/controller/posts/postCtrl.js"></script>
+<script src="assets/js/controller/posts/postCtrl.js"></script>
+<script src="assets/js/controller/draw/drawCtrl.js"></script>
+<script src="assets/js/controller/locker/lockerCtrl.js"></script>
+<script src="assets/js/service/utils.js"></script>
+<script src="assets/js/service/postsService.js"></script>
+<script src="assets/js/service/socketService.js"></script>
+<script src="assets/js/service/boardService.js"></script>
+<script src="assets/js/service/stompService.js"></script>
+<script src="assets/js/service/useService.js"></script>
+<script src="assets/js/service/chatService.js"></script>
+<script src="assets/js/directive/draw.js"></script>
+<script src="assets/js/directive/locker.js"></script>
+</body>
 </html>

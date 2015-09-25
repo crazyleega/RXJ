@@ -1,0 +1,48 @@
+<!--<ion-side-menus>-->
+  <!--&lt;!&ndash; Left menu &ndash;&gt;-->
+  <!--<ion-side-menu side="left">-->
+    <!--22-->
+  <!--</ion-side-menu>-->
+
+  <!--<ion-side-menu-content>-->
+    <!--<ion-view >-->
+      <!--<ion-content >-->
+      <!--<button ng-click="emitU()">aaaaa</button>-->
+        <!--<div class="board" id="myBoard"></div>-->
+      <!--</ion-content>-->
+    <!--</ion-view>-->
+  <!--</ion-side-menu-content>-->
+
+  <!--&lt;!&ndash; Right menu &ndash;&gt;-->
+  <!--<ion-side-menu side="right">-->
+    <!--<ion-list>-->
+      <!--<ion-item class="item-remove-animate" ng-repeat="menu in menuList" type="item-text-wrap">-->
+        <!--<h2>{{menu.NAME}}</h2>-->
+        <!--</ion-item>-->
+    <!--</ion-list>-->
+  <!--</ion-side-menu>-->
+
+<!--</ion-side-menus>-->
+<ion-view >
+  <div class="bar bar-header bar-light">
+    <h1 class="title">SocketIO实时白板</h1>
+  </div>
+  <ion-content class="has-footer has-header">
+    <draw></draw>
+  </ion-content>
+  <div class="tabs tabs-light tabs-icon-top tabs-color-positive">
+    <a class="tab-item" ng-click="$root.onClickDashTab()">
+      <i class="icon ion-cube" ></i>菜单
+    </a>
+    <a class="tab-item" ng-click="$root.onClickPostTab()">
+      <i class="icon ion-ios-book"></i>订阅
+    </a>
+    <a class="tab-item has-badge" ng-click="$root.onClickChatTab()">
+      <div class="badge badge-assertive">{{ $root.chatBadge != 0 ? $root.chatBadge : ""}}</div>
+      <i class="icon ion-chatbubbles"></i>聊天
+    </a>
+    <a class="tab-item active" ng-click="$root.onClickDrawTab()">
+      <i class="icon ion-paintbrush"></i>绘画
+    </a>
+  </div>
+</ion-view>

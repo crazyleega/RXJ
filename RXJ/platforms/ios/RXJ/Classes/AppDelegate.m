@@ -6,9 +6,9 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -29,6 +29,7 @@
 #import "MainViewController.h"
 
 #import <Cordova/CDVPlugin.h>
+#import <AVOSCloud/AVOSCloud.h>
 
 @implementation AppDelegate
 
@@ -40,18 +41,18 @@
      *  -jm
      **/
     NSHTTPCookieStorage* cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-
+    
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
-
+    
     int cacheSizeMemory = 8 * 1024 * 1024; // 8MB
     int cacheSizeDisk = 32 * 1024 * 1024; // 32MB
 #if __has_feature(objc_arc)
-        NSURLCache* sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
+    NSURLCache* sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
 #else
-        NSURLCache* sharedCache = [[[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"] autorelease];
+    NSURLCache* sharedCache = [[[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"] autorelease];
 #endif
     [NSURLCache setSharedURLCache:sharedCache];
-
+    
     self = [super init];
     return self;
 }
@@ -63,31 +64,59 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    
+    
+    //设置AVOSCloud
+    [AVOSCloud setApplicationId:@"PROuGIplobnLW5GnyR8CFXhc"
+                      clientKey:@"9JEyolOHOAGPJlaeh1JAmau9"];
+    
+    //统计应用启动情况
+    [AVAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){    UIUserNotificationType type = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:nil];    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];}
+    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-
+    
 #if __has_feature(objc_arc)
-        self.window = [[UIWindow alloc] initWithFrame:screenBounds];
+    self.window = [[UIWindow alloc] initWithFrame:screenBounds];
 #else
-        self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
+    self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
 #endif
     self.window.autoresizesSubviews = YES;
-
+    
 #if __has_feature(objc_arc)
-        self.viewController = [[MainViewController alloc] init];
+    self.viewController = [[MainViewController alloc] init];
 #else
-        self.viewController = [[[MainViewController alloc] init] autorelease];
+    self.viewController = [[[MainViewController alloc] init] autorelease];
 #endif
-
+    
     // Set your app's start page by setting the <content src='foo.html' /> tag in config.xml.
     // If necessary, uncomment the line below to override it.
     // self.viewController.startPage = @"index.html";
-
+    
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
-
+    
+    
+    if([[[UIDevice currentDevice] systemVersion] floatValue]<8){
+        [application registerForRemoteNotificationTypes:
+         UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeAlert |
+         UIRemoteNotificationTypeSound];
+    }else{
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert
+                                                | UIUserNotificationTypeBadge
+                                                | UIUserNotificationTypeSound
+                                                                                 categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    }
+    
+    
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-
+    
     return YES;
 }
 
@@ -98,10 +127,10 @@
     if (!url) {
         return NO;
     }
-
+    
     // all plugins will get the notification, and their handlers will be called
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
-
+    
     return YES;
 }
 
@@ -115,31 +144,38 @@
 
 #ifndef DISABLE_PUSH_NOTIFICATIONS
 
-    - (void)                                 application:(UIApplication*)application
-        didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-    {
-        // re-post ( broadcast )
-        NSString* token = [[[[deviceToken description]
-            stringByReplacingOccurrencesOfString:@"<" withString:@""]
-            stringByReplacingOccurrencesOfString:@">" withString:@""]
-            stringByReplacingOccurrencesOfString:@" " withString:@""];
+- (void)                                 application:(UIApplication*)application
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    AVInstallation *currentInstallation = [AVInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation addUniqueObject:@"news" forKey:@"channels"];
+    [currentInstallation addUniqueObject:@"test" forKey:@"channels"];
+    [currentInstallation setObject:@(YES) forKey:@"owner"];
+    [currentInstallation saveInBackground];
+    
+    // re-post ( broadcast )
+    NSString* token = [[[[deviceToken description]
+                         stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                        stringByReplacingOccurrencesOfString:@">" withString:@""]
+                       stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
+}
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
-    }
-
-    - (void)                                 application:(UIApplication*)application
-        didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-    {
-        // re-post ( broadcast )
-        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
-    }
+- (void)                                 application:(UIApplication*)application
+    didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    // re-post ( broadcast )
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
+}
 #endif
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
 {
     // iPhone doesn't support upside down by default, while the iPad does.  Override to allow all orientations always, and let the root view controller decide what's allowed (the supported orientations mask gets intersected).
     NSUInteger supportedInterfaceOrientations = (1 << UIInterfaceOrientationPortrait) | (1 << UIInterfaceOrientationLandscapeLeft) | (1 << UIInterfaceOrientationLandscapeRight) | (1 << UIInterfaceOrientationPortraitUpsideDown);
-
+    
     return supportedInterfaceOrientations;
 }
 

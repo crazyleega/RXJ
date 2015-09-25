@@ -1,0 +1,22 @@
+<ion-view >
+  <ion-nav-bar>
+    <ion-nav-back-button class="button-clear">
+      <i class="ion-arrow-left-c"></i> 返回
+    </ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content class="has-header" delegate-handle="userScroll">
+    <ion-list class="messages">
+      <ion-item class="message" ng-repeat="detail in $root.chatCache[user].records">
+        <p>{{detail.body}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer-bar align-title="left" class="bar-light reply-new" keyboard-attach>
+    <label class="item-input-wrapper">
+      <input type="text" class="row" placeholder="回复" ng-model="msg">
+    </label>
+    <button ng-click="send()" class="button button-small button-clear button-positive">
+      提交
+    </button>
+  </ion-footer-bar>
+</ion-view>
