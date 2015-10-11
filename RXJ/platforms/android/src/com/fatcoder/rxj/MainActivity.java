@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import com.avos.avoscloud.*;
 import org.apache.cordova.CordovaActivity;
 import org.json.JSONObject;
@@ -47,12 +49,40 @@ public class MainActivity extends CordovaActivity {
 //                }
 //            }
 //        });
-        AVInstallation.getCurrentInstallation().saveInBackground();
+//        AVInstallation.getCurrentInstallation().saveInBackground();
+//        PushService.setDefaultPushCallback(this, MainActivity.class);//这里不回调的话   不能接收消息
+//        PushService.subscribe(this, "news", MainActivity.class);
+//        PushService.subscribe(this, "test", MainActivity.class);
+//        //监控打开情况
+//        AVAnalytics.trackAppOpened(getIntent());
+
         PushService.setDefaultPushCallback(this, MainActivity.class);//这里不回调的话   不能接收消息
         PushService.subscribe(this, "news", MainActivity.class);
         PushService.subscribe(this, "test", MainActivity.class);
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            public void done(AVException e) {
+                if (e == null) {
+                    // 保存成功
+                    Log.i("out", AVInstallation.getCurrentInstallation().getInstallationId() + "");
+//                    loadUrl("javascript:window.OSInfo ={os:'android',push:'"+AVInstallation.getCurrentInstallation().getInstallationId()+"'}");
+                    // 关联  installationId 到用户表等操作……
+                } else {
+                    // 保存失败，输出错误信息
+                }
+            }
+        });
+
         //监控打开情况
         AVAnalytics.trackAppOpened(getIntent());
+        // Set by <content src="index.html" /> in config.xml
+
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            //SDK > 9 的时候主线程发HTTP请求
+            Log.i("out", android.os.Build.VERSION.SDK_INT + "");
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         registerMessageReceiver();
         loadUrl(launchUrl);
