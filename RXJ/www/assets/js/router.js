@@ -54,7 +54,13 @@ app.config(["$stateProvider", "$urlRouterProvider","$locationProvider",
           url: '/post',
           templateUrl: "assets/tpl/posts/post.html",
           controller:'postCtrl'
-        })
-    $urlRouterProvider.otherwise('/');
+        }).state('register',{
+          url:"/register",
+          templateUrl:"assets/tpl/user/register.html",
+          controller:'registerCtrl'
+        }
+
+    )
+    $urlRouterProvider.otherwise('/register');
     //$locationProvider.html5Mode(true);
 }]);
