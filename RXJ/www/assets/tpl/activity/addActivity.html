@@ -1,0 +1,25 @@
+<ion-view>
+    <ion-content class="padding">
+    <ion-list>
+      <ng-form>
+      <ion-item class="item-input">
+          <input type="text" placeholder="请输入活动主题" ng-model="activity.topic">
+      </ion-item>
+      <ion-item class="item-input">
+          <input type="text" placeholder="请输入活动地点" ng-model="activity.address">
+      </ion-item>
+      <ion-item class="item-input">
+          <input type="date" placeholder="请选择活动时间" ng-model="activity.activityDate">
+      </ion-item>
+      <ion-item class="item-input">
+          <input type="text" placeholder="请输入活动参与人员" ng-model="activity.guests">
+      </ion-item>
+      <ion-item class="item-input">
+          <textarea placeholder="请输入活动备注" ng-model="activity.memo"></textarea>
+      </ion-item>
+    </ion-list>
+      <div class="padding" style="width:100%">
+      <button class="button button-positive" style="width: 100%;" ng-click="addActivity()">添加</button>
+    </div>
+    </ion-content>
+</ion-view>

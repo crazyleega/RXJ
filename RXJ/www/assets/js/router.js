@@ -16,6 +16,10 @@ app.config(["$stateProvider", "$urlRouterProvider",
         url: '/dash',
         templateUrl: "assets/tpl/dash/dash.html",
         controller: 'dashCtrl'
+      }).state("addActivity",{
+        url:'/addActivity',
+        templateUrl:"assets/tpl/activity/addActivity.html",
+        controller:'addActivityCtrl'
       });
 
 
