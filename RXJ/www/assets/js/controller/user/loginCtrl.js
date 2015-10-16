@@ -20,7 +20,16 @@ app.controller('loginCtrl',['$scope','$rootScope','loginService','$state',
       console.log($scope.user.account);
       console.log($scope.user.password);
 
-      loginService.login($scope.user.account, $scope.user.password
+      loginService.login($scope.user.account, $scope.user.password).then(
+
+        function(){
+          console.log("登录成功");
+          $state.go('dash');
+        },function(error){
+          console.log("登录失败");
+          $state.go('login');
+        }
+
       )
 
     }}]);

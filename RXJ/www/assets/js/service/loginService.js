@@ -2,7 +2,7 @@
  * Created by Mac on 15/10/13.
  */
 
-  app.factory("loginService",['$rootScope','$timeout','$state',function($rootScope,$timeout,$state){
+  app.factory("loginService",['$rootScope','$timeout','$state','$q','ngNotify',function($rootScope,$timeout,$state,$q,ngNotify){
 
 //  //初始化数据库
     AV.initialize("PROuGIplobnLW5GnyR8CFXhc",
@@ -12,41 +12,35 @@
     return {
       login: function (user, pw) {
 
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
         AV.User.logIn(user, pw, {
-          success: function (user) {
+          success: function (data) {
             // 成功了，现在可以做其他事情了.
 
+            deferred.resolve(data);
+            console.log("login is success");
+
             console.log('login in successfully: %j', AV.User.current());
-            $state.go('dash');
 
             var currentUser=AV.User.current();
             console.log(currentUser._serverData.username);
 
           },
-          error: function (user, error) {
+          error: function (data, error) {
             // 失败了.
             console.log("error");
 
-            $timeout(function () {
-              $rootScope.showError = true;
-            }, 1000);
-            //
-            $state.go('login');
+            console.log(error.message);
+            ngNotify.set(error.message,"error");
+
+
 
 
           }
         });
-      },
-      remove: function (users) {
-        users.splice(users.indexOf(users), 1);
-      },
-      get: function (id) {
-        for (var i = 0; i < users.length; i++) {
-          if (users[i].id === parseInt(id)) {
-            return users[i];
-          }
-        }
-        return null;
+        return promise;
       }
     }
   }]);
