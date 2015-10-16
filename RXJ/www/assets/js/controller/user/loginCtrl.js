@@ -6,8 +6,6 @@
 app.controller('loginCtrl',['$scope','$rootScope','loginService','$state',
   function($scope,$rootScope,loginService,$state){
 
-    $state.go('login');
-
     $rootScope.showError = false;
 
     $scope.user={

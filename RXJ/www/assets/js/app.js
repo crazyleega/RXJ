@@ -55,6 +55,7 @@ app.run(["$rootScope","$ionicViewSwitcher","$state","ngNotify",function ($rootSc
     sticky: false,
     html: false
   });
+  AV.initialize("PROuGIplobnLW5GnyR8CFXhc", "9JEyolOHOAGPJlaeh1JAmau9")
 }]);
 //decorator
 app.constant("GLOBAL_CONSTANT", {

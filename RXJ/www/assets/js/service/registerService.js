@@ -2,7 +2,6 @@
  * Created by Mac on 15/10/15.
  */
 app.factory('registerService',['$q','GLOBAL_CONSTANT','ngNotify',function($q,GLOBAL_CONSTANT,ngNotify){
-  AV.initialize(GLOBAL_CONSTANT.AVID, GLOBAL_CONSTANT.AVKEY);
   var deferred = $q.defer();
   return {
     register:function(data){

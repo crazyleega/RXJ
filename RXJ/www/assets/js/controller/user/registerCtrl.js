@@ -1,7 +1,7 @@
 /**
  * Created by Mac on 15/10/15.
  */
-app.controller('registerCtrl',['$scope','$location','registerService',function($scope,$location,registerService){
+app.controller('registerCtrl',['$scope','$state','registerService',function($scope,$state,registerService){
   $scope.user = {
     phone:'',
     code:'',
@@ -16,7 +16,7 @@ app.controller('registerCtrl',['$scope','$location','registerService',function($
     promise.then(function(){
       $scope.flag = 2
       console.log("注册成功");
-      $location.path("/register");
+      $state.go('dash')
     },function(error){
       $scope.flag = 1;
     })

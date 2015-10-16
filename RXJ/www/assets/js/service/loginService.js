@@ -4,11 +4,6 @@
 
   app.factory("loginService",['$rootScope','$timeout','$state','$q','ngNotify',function($rootScope,$timeout,$state,$q,ngNotify){
 
-//  //初始化数据库
-    AV.initialize("PROuGIplobnLW5GnyR8CFXhc",
-
-      "9JEyolOHOAGPJlaeh1JAmau9");//相当于连接数据库
-
     return {
       login: function (user, pw) {
 
