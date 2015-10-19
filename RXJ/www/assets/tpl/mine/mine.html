@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<ion-view>
+    <div class="bar bar-header bar-dark ">
+        <h1 class="title">修改密码</h1>
+    </div>
 
-</body>
-</html>
+
+    <ion-content class="has-header">
+
+    <ion-list ng-if="flag==1" class="padding-top">
+      <ion-item class="item-input item-button-right">
+        <input type="text" placeholder="请输入手机号码" ng-model="user.phone">
+        <button class="button button-small positive-bg light" ng-click="getCode()">获取</button>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list ng-if="flag==2">
+      <ion-item class="item-input">
+        <input type="text" placeholder="请输入验证码" ng-model="user.code">
+      </ion-item>
+      <ion-item class="item-input">
+        <input type="text" ng-model="user.password" placeholder="请输入新的密码">
+      </ion-item>
+      <div class="padding" style="width:100%">
+        <button class="button button-positive" style="width: 100%;" ng-click="confirmPassword()">完成</button>
+      </div>
+    </ion-list>
+  </ion-content>
+
+
+    <div class="tabs tabs-stable">
+        <a class="tab-item " ng-click="onClickDashTab()">
+            列表
+        </a>
+        <a class="tab-item"  ng-click="onClickMainTab()">
+            主页
+        </a>
+        <a class="tab-item active" ng-click="onClickMineTab()">
+            我的
+        </a>
+    </div>
+</ion-view>
