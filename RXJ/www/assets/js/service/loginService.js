@@ -2,13 +2,14 @@
  * Created by Mac on 15/10/13.
  */
 
-  app.factory("loginService",['$rootScope','$timeout','$state','$q','ngNotify',function($rootScope,$timeout,$state,$q,ngNotify){
+  app.factory("loginService",['$rootScope','$state','$q','ngNotify',function($rootScope,$state,$q,ngNotify){
 
     return {
       login: function (user, pw) {
 
         var deferred = $q.defer();
         var promise = deferred.promise;
+
 
         AV.User.logIn(user, pw, {
           success: function (data) {
@@ -29,9 +30,6 @@
 
             console.log(error.message);
             ngNotify.set(error.message,"error");
-
-
-
 
           }
         });

@@ -23,6 +23,7 @@ app.controller('loginCtrl',['$scope','$rootScope','loginService','$state',
         function(){
           console.log("登录成功");
           $state.go('dash');
+
         },function(error){
           console.log("登录失败");
           $state.go('login');

@@ -24,17 +24,17 @@ app.run(["$rootScope","$ionicViewSwitcher","$state","ngNotify",function ($rootSc
     $ionicViewSwitcher.nextTransition("none");
     $state.go('dash');
   }
-  $rootScope.onClickPostTab = function(){
+  $rootScope.onClickMineTab = function(){
       $ionicViewSwitcher.nextTransition("none");
-      $state.go('posts');
+      $state.go('mine');
   }
-  $rootScope.onClickChatTab = function(){
+  $rootScope.onClickMainTab = function(){
       $ionicViewSwitcher.nextTransition("none");
-      $state.go('chat');
+      $state.go('home');
   }
-  $rootScope.onClickDrawTab = function(){
+  $rootScope.onClickItemTab = function(){
       $ionicViewSwitcher.nextTransition("none");
-      $state.go('draw');
+      $state.go('todoItem');
   }
 
   $rootScope.safeApply = function(fn) {

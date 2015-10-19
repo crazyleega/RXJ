@@ -16,7 +16,7 @@ app.controller('registerCtrl',['$scope','$state','registerService',function($sco
     promise.then(function(){
       $scope.flag = 2
       console.log("注册成功");
-      $state.go('dash')
+     // $state.go('dash')
     },function(error){
       $scope.flag = 1;
     })
